@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QUADRA - Inicio</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    .map-background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://i.wpimg.pl/1920x1080/filerepo.grupawp.pl/api/v1/display/embed/eb2694f5-9bf5-487c-a918-79ce6d7246a7');
+      background-size: cover;
+      z-index: 1;
+    }
+    
+    .quadra-title {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #ff5e00;
+      font-size: 48px;
+      padding: 10px 0;
+      font-weight: bold;
+      z-index: 3;
+    }
+
+    .logout-button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      z-index: 4;
+    }
+
+    .logout-button button {
+      background-color: #ff5e00;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-button button:hover {
+      background-color: #cc4b00;
+    }
+
+    .search-bar {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      z-index: 4;
+    }
+
+    .search-bar input {
+      width: 250px;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .welcome-text {
+      position: absolute;
+      top: 80px;
+      width: 100%;
+      text-align: center;
+      z-index: 2;
+      color: black;
+      text-shadow: none;
+      font-weight: bold;
+    }
+
+    .welcome-text h1 {
+      margin: 0;
+      font-size: 28px;
+      color: white;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    }
+
+    .welcome-text p {
+      margin: 5px 0 0 0;
+      font-size: 16px;
+    }
+
+    .add-location-container {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      text-align: center;
+      z-index: 2;
+      color: black;
+    }
+
+    .add-location-text {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .add-location-button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: white;
+      border: 2px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .add-location-button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .zoom-controls {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .zoom-controls button {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      border: none;
+      margin: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: white;
+      border: 2px solid #444;
+    }
+
+    .pin {
+      width: 40px;
+      height: 40px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/684/684908.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 3;
+      cursor: grab;
+      transform: translate(-50%, -100%);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 5;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(5px);
+      background-color: rgba(0,0,0,0.4);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+      text-align: center;
+      color: #333;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .modal-content button {
+      width: 100%;
+      padding: 10px;
+      background-color: #6200ea;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal-content button:hover {
+      background-color: #4500b5;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .close-modal:hover {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="map-background"></div>
+
+  <div class="quadra-title">QUADRA</div>
+
+  <div class="logout-button">
+    <button onclick="logout()">Cerrar Sesión</button>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Buscar ubicación...">
+  </div>
+  <div id="resultadoBusqueda" style="position: absolute; top: 120px; left: 15px; z-index: 4;"></div>
+
+  <div class="welcome-text">
+    <h1>¡Bienvenido a QUADRA!</h1>
+    <p>Gracias por unirte a nuestra comunidad. Desde aquí podrás acceder a todas las funcionalidades del sistema. Explora, crea y conecta.</p>
+  </div>
+
+  <div class="add-location-container">
+    <div class="add-location-text">AÑADIR UBICACIÓN</div>
+    <div class="add-location-button" onclick="openModal()">＋</div>
+  </div>
+
+  <div class="zoom-controls">
+    <button onclick="zoomIn()">＋</button>
+    <button onclick="zoomOut()">−</button>
+  </div>
+
+  <div class="pin" id="draggablePin"></div>
+
+  <!-- Modal -->
+  <div id="locationModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">×</span>
+      <h3>Agregar Nueva Ubicación</h3>
+      <input id="nombrePuesto" type="text" placeholder="Nombre del lugar" required />
+      <input id="direccionPuesto" type="text" placeholder="Dirección" required />
+      <input id="telefonoPuesto" type="number" step="any" placeholder="Telefono" required />
+      
+      <button onclick="submitLocation()">Guardar</button>
+    </div>
+  </div>
+
+
+  <script>
+    const modal = document.getElementById('locationModal');
+    const pin = document.getElementById('draggablePin');
+    
+    
+    function openModal() {
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    function submitLocation() {
+      const nombre = document.getElementById("nombrePuesto").value;
+      const direccion = document.getElementById("direccionPuesto").value;
+      const telefono = document.getElementById("telefonoPuesto").value;
+
+      if (!nombre || !direccion || !telefono) {
+        alert("Por favor completa todos los campos.");
+        return;
+      }
+
+      fetch('/guardar_ubicacion', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nombre: nombre,
+          direccion: direccion,
+          telefono: telefono,
+          usuario_id: 10  // Provisional
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.mensaje || "Ubicación guardada");
+        closeModal();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error al guardar la ubicación.");
+      });
+    }
+
+
+
+      function logout() {
+        window.location.href = '/login'; // O la ruta que tengas en Flask para mostrar el login
+    }
+
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        closeModal();
+      }
+    };
+
+    // Pin draggable
+    let isDragging = false;
+
+    pin.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      pin.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      pin.style.cursor = 'grab';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      pin.style.left = e.clientX + 'px';
+      pin.style.top = e.clientY + 'px';
+    });
+
+    function zoomIn() {
+      alert("Zoom + (solo visual por ahora)");
+    }
+
+    function zoomOut() {
+      alert("Zoom - (solo visual por ahora)");
+    }
+    const puestos = {
+    "HamburguesadoS": "https://s1.elespanol.com/2020/04/06/elandroidelibre/el_androide_libre_480464415_180506610_1200x1333.jpg",
+    
+    "Pozoleria Jalisco": "https://www.radioformula.com.mx/u/fotografias/m/2025/4/26/f768x1-898350_898477_5050.jpg"
+    };
+    const puestosAlternativos = {
+    "HamburguesadoS": "https://storage.googleapis.com/support-forums-api/attachment/message-120453236-10055784144129478240.png",
+    
+    "Pozoleria Jalisco": "https://broadly.com/wp-content/uploads/2023/10/Broadly-Blog-2-October-9th-Due-Date-Screenshot-5-271x300.png"
+    };
+
+
+    const inputBusqueda = document.querySelector('.search-bar input');
+    const resultadoDiv = document.getElementById('resultadoBusqueda');
+
+    inputBusqueda.addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        const termino = inputBusqueda.value.trim();
+        const imagen = puestos[termino];
+        if (imagen) {
+        const altImg = puestosAlternativos[termino];
+        resultadoDiv.innerHTML = `
+         <div style="background-color: white; padding: 10px; border-radius: 8px; box-shadow: 0 0 10px #aaa; max-width: 600px;">
+          <h4 style="margin-top:0;">${termino}</h4>
+          <img 
+            src="${imagen}" 
+            alt="${termino}" 
+            style="width: 100%; border-radius: 6px; cursor: pointer;" 
+            onclick="this.src='${altImg}'"
+          >
+        </div>`;
+        } else {
+          resultadoDiv.innerHTML = `<div style="color: black;">No se encontró información para: <strong>${termino}</strong></div>`;
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
